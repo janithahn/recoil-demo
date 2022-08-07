@@ -1,22 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { useRecoilValueLoadable } from 'recoil';
+import { userSelector } from './recoil/actions/fetchUsers';
 
 function App() {
+
+  const fetchedUser = useRecoilValueLoadable(userSelector);
+
+  console.log(fetchedUser);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header style={{ paddingLeft: 20, paddingRight: 20 }} className="App-header">
+        <h2>State: {fetchedUser.state}</h2>
+        {fetchedUser.contents.results ? 
+          <h1>Info: {
+            JSON.stringify(fetchedUser.contents.results[0].name)
+          }</h1>
+        :undefined}
       </header>
     </div>
   );
